@@ -144,3 +144,27 @@ User.deleteOne({ name: "Alice" }).then(successCallback).catch(errorCallback);
 User.findByIdAndRemove("5a3a7ecbc6ca8b9ce68bd41b")
   .then(successCallback)
   .catch(errorCallback);
+
+////////////////UTILS
+//count the number of documents that match a specific condition.
+User.countDocuments({ type: "student" })
+  .then((count) => console.log(`There are ${count} students`))
+  .catch((err) => console.log(err));
+
+////////USE DOCUMENTS FOR MANIPULATING DATA (not preferred one)
+
+myUser
+  .save() // Create a new user and return a promise
+  .then((user) => console.log("The user was created"))
+  .catch((error) => console.log("An error occurred", error));
+
+// -------------------- UPDATE --------------------
+// Find the user with id '5a3a7ecbc6ca8b9ce68bd41b' and update its job and salary
+User.findById("5a3a7ecbc6ca8b9ce68bd41b")
+  .then((user) => {
+    user.job = "Developer";
+    user.salary += 10000;
+    return user.save(); // Update the user '5a3a7ecbc6ca8b9ce68bd41b' and return a promise
+  })
+  .then((user) => console.log("The user was updated: " + user))
+  .catch((err) => console.log("An error occurred:", err));
